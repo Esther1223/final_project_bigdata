@@ -29,12 +29,25 @@ export interface ScheduleItem {
   durationMinutes: number;
 }
 
+export interface ImportantEvent {
+  date: string; // e.g., "Mon"
+  time: string;
+  title: string;
+}
+
 export interface AIAnalysisResult {
+  // Existing Stress Analysis
   stressScore: number;
   peakStressDay: string;
   riskFactors: string[];
   suggestions: string[];
   encouragement: string;
+  
+  // New Smart Assistant Features
+  weeklySummary: string;
+  importantEvents: ImportantEvent[];
+  todoList: string[];
+  reminders: string[];
 }
 
 export const ACTIVITY_COLORS: Record<ActivityType, string> = {

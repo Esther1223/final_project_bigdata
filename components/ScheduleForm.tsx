@@ -20,6 +20,10 @@ export const ScheduleForm: React.FC<Props> = ({ onAdd }) => {
     return (endH * 60 + endM) - (startH * 60 + startM);
   };
 
+  const duration = calculateDuration(startTime, endTime);
+  const durationHours = Math.floor(Math.abs(duration) / 60);
+  const durationMinutes = Math.abs(duration) % 60;
+
   const generateId = () => {
     if (typeof crypto !== 'undefined' && crypto.randomUUID) {
       return crypto.randomUUID();
@@ -130,6 +134,18 @@ export const ScheduleForm: React.FC<Props> = ({ onAdd }) => {
             />
           </div>
         </div>
+
+        {/* Duration Display */}
+        {duration > 0 && (
+          <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-3 flex items-center justify-between">
+            <span className="text-sm text-indigo-700 font-medium">預計時長</span>
+            <span className="text-lg font-bold text-indigo-900">
+              {durationHours > 0 && `${durationHours} 小時`}
+              {durationHours > 0 && durationMinutes > 0 && ' '}
+              {durationMinutes > 0 && `${durationMinutes} 分鐘`}
+            </span>
+          </div>
+        )}
 
         {/* Row 4: Note */}
         <div>

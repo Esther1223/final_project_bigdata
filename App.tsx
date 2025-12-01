@@ -111,7 +111,7 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-2xl">🎓</span>
-            <h1 className="font-bold text-gray-800 text-lg md:text-xl tracking-tight">UniStress 分析器</h1>
+            <h1 className="font-bold text-gray-800 text-lg md:text-xl tracking-tight">UniStress 分析器 & 智慧助理</h1>
           </div>
         </div>
       </header>
@@ -153,7 +153,7 @@ export default function App() {
                 : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50'
             }`}
           >
-            <span>📊</span> 分析儀表板
+            <span>📊</span> 分析報告
           </button>
         </div>
 
@@ -191,9 +191,9 @@ export default function App() {
                  
                  <button 
                     onClick={handleAIAnalysis}
-                    className="w-full bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 text-white p-4 rounded-xl shadow-lg shadow-indigo-200 font-bold flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    className="w-full bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 text-white p-4 rounded-xl shadow-lg shadow-indigo-200 font-bold flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all group"
                  >
-                    <span className="text-xl">✨</span> 讓 AI 分析這週行程
+                    <span className="text-xl group-hover:rotate-12 transition-transform">✨</span> 產生完整分析報告
                  </button>
               </div>
             </div>
@@ -255,7 +255,9 @@ export default function App() {
             </div>
           </div>
         ) : (
-          <div className="animate-fade-in max-w-5xl mx-auto">
+          <div className="animate-fade-in max-w-5xl mx-auto space-y-8">
+             
+             {/* Charts */}
              <Dashboard schedule={schedule} />
 
              {isLoadingAI ? (
@@ -264,72 +266,149 @@ export default function App() {
                         <div className="absolute inset-0 border-4 border-indigo-100 rounded-full"></div>
                         <div className="absolute inset-0 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
                      </div>
-                     <h3 className="text-lg font-bold text-gray-800 mb-2">AI 正在分析你的肝...</h3>
-                     <p className="text-gray-500">正在計算課業、打工與睡眠的黃金比例</p>
+                     <h3 className="text-lg font-bold text-gray-800 mb-2">AI 正在整理你的行程...</h3>
+                     <p className="text-gray-500">正在計算壓力指數並生成智慧助理報告</p>
                  </div>
              ) : aiResult ? (
-                 <div className="bg-white rounded-2xl shadow-xl border border-indigo-100 overflow-hidden">
-                     <div className="bg-gradient-to-r from-indigo-600 to-violet-600 p-8 md:p-10 text-white relative overflow-hidden">
-                         <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-                             <div className="max-w-xl">
-                                <h2 className="text-3xl font-bold mb-3">AI 分析報告</h2>
-                                <div className="text-indigo-100 text-lg leading-relaxed italic">
-                                    "{aiResult.encouragement}"
+                 <>
+                    {/* Stress Analysis Card */}
+                    <div className="bg-white rounded-2xl shadow-xl border border-indigo-100 overflow-hidden">
+                        <div className="bg-gradient-to-r from-indigo-600 to-violet-600 p-8 md:p-10 text-white relative overflow-hidden">
+                            <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                                <div className="max-w-xl">
+                                    <h2 className="text-3xl font-bold mb-3">AI 壓力檢測</h2>
+                                    <div className="text-indigo-100 text-lg leading-relaxed italic">
+                                        "{aiResult.encouragement}"
+                                    </div>
                                 </div>
-                             </div>
-                             <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl text-center min-w-[140px] border border-white/20 shadow-lg">
-                                 <div className="text-xs uppercase tracking-widest opacity-80 mb-2">AI 壓力指數</div>
-                                 <div className="text-5xl font-black">{aiResult.stressScore}</div>
-                             </div>
-                         </div>
-                         <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
-                     </div>
-                     
-                     <div className="p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-10">
-                         <div>
-                             <h4 className="font-bold text-gray-800 mb-5 flex items-center gap-3 text-lg">
-                                <span className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-500">⚠️</span> 
-                                潛在風險
-                             </h4>
-                             <ul className="space-y-4">
-                                 {aiResult.riskFactors.map((risk, idx) => (
-                                     <li key={idx} className="flex items-start gap-3 text-gray-700 bg-red-50/50 p-4 rounded-xl border border-red-100/50 hover:bg-red-50 transition-colors">
-                                        <span className="text-red-400 mt-1">•</span> 
-                                        <span>{risk}</span>
-                                     </li>
-                                 ))}
-                             </ul>
-                             
-                             <div className="mt-8 bg-gray-900 rounded-xl p-6 text-white relative overflow-hidden group">
-                                <div className="relative z-10">
-                                    <div className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2">本週最崩潰日</div>
-                                    <div className="text-2xl font-mono text-yellow-400">{aiResult.peakStressDay}</div>
+                                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl text-center min-w-[140px] border border-white/20 shadow-lg">
+                                    <div className="text-xs uppercase tracking-widest opacity-80 mb-2">AI 壓力指數</div>
+                                    <div className="text-5xl font-black">{aiResult.stressScore}</div>
                                 </div>
-                                <div className="absolute right-4 bottom-4 text-4xl opacity-20 group-hover:scale-110 transition-transform">🔥</div>
-                             </div>
+                            </div>
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+                        </div>
+                        
+                        <div className="p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div>
+                                <h4 className="font-bold text-gray-800 mb-5 flex items-center gap-3 text-lg">
+                                    <span className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-500">⚠️</span> 
+                                    潛在風險
+                                </h4>
+                                <ul className="space-y-4">
+                                    {aiResult.riskFactors.map((risk, idx) => (
+                                        <li key={idx} className="flex items-start gap-3 text-gray-700 bg-red-50/50 p-4 rounded-xl border border-red-100/50 hover:bg-red-50 transition-colors">
+                                            <span className="text-red-400 mt-1">•</span> 
+                                            <span>{risk}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 className="font-bold text-gray-800 mb-5 flex items-center gap-3 text-lg">
+                                    <span className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600">💡</span> 
+                                    改善建議
+                                </h4>
+                                <ul className="space-y-4">
+                                    {aiResult.suggestions.map((suggestion, idx) => (
+                                        <li key={idx} className="flex items-start gap-3 text-gray-700 bg-green-50/50 p-4 rounded-xl border border-green-100/50 hover:bg-green-50 transition-colors">
+                                            <div className="w-6 h-6 rounded-full bg-green-200 text-green-700 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">{idx + 1}</div>
+                                            <span>{suggestion}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* New: Smart Assistant Report */}
+                    <div>
+                         <div className="flex items-center gap-3 mb-6">
+                            <span className="text-3xl">📅</span>
+                            <h2 className="text-2xl font-bold text-gray-800">智慧助理報告</h2>
                          </div>
                          
-                         <div>
-                             <h4 className="font-bold text-gray-800 mb-5 flex items-center gap-3 text-lg">
-                                <span className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600">💡</span> 
-                                改善建議
-                             </h4>
-                             <ul className="space-y-4">
-                                 {aiResult.suggestions.map((suggestion, idx) => (
-                                     <li key={idx} className="flex items-start gap-3 text-gray-700 bg-green-50/50 p-4 rounded-xl border border-green-100/50 hover:bg-green-50 transition-colors">
-                                         <div className="w-6 h-6 rounded-full bg-green-200 text-green-700 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">{idx + 1}</div>
-                                         <span>{suggestion}</span>
-                                     </li>
-                                 ))}
-                             </ul>
+                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {/* Card 1: Weekly Summary */}
+                            <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm md:col-span-2 lg:col-span-1 hover:shadow-md transition-shadow">
+                                <h4 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                    <span className="bg-blue-100 text-blue-600 p-1.5 rounded-lg">📌</span>
+                                    本週重點摘要
+                                </h4>
+                                <p className="text-gray-600 leading-relaxed">
+                                    {aiResult.weeklySummary}
+                                </p>
+                            </div>
+
+                             {/* Card 2: Important Events */}
+                            <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm md:col-span-2 lg:col-span-2 hover:shadow-md transition-shadow">
+                                <h4 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                    <span className="bg-purple-100 text-purple-600 p-1.5 rounded-lg">⭐</span>
+                                    重要時間整理
+                                </h4>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    {aiResult.importantEvents.length > 0 ? (
+                                        aiResult.importantEvents.map((event, idx) => (
+                                            <div key={idx} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg border border-gray-100">
+                                                <div className="bg-white border border-gray-200 rounded px-3 py-1 text-center min-w-[60px]">
+                                                    <div className="text-xs font-bold text-gray-400 uppercase">{event.date}</div>
+                                                    <div className="text-sm font-bold text-gray-800">{event.time}</div>
+                                                </div>
+                                                <div className="font-medium text-gray-700">{event.title}</div>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div className="text-gray-400 italic p-2">本週沒有特別標註的重要事件。</div>
+                                    )}
+                                </div>
+                            </div>
+
+                             {/* Card 3: To-Do List */}
+                             <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                                <h4 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                    <span className="bg-orange-100 text-orange-600 p-1.5 rounded-lg">📝</span>
+                                    推測待辦事項
+                                </h4>
+                                <ul className="space-y-3">
+                                    {aiResult.todoList.length > 0 ? aiResult.todoList.map((todo, idx) => (
+                                        <li key={idx} className="flex items-start gap-3">
+                                            <div className="mt-1 w-4 h-4 rounded-full border-2 border-orange-200"></div>
+                                            <span className="text-gray-600 text-sm">{todo}</span>
+                                        </li>
+                                    )) : <li className="text-gray-400 italic text-sm">無需待辦事項。</li>}
+                                </ul>
+                            </div>
+
+                            {/* Card 4: Reminders */}
+                            <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm md:col-span-1 lg:col-span-2 hover:shadow-md transition-shadow">
+                                <h4 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                    <span className="bg-pink-100 text-pink-600 p-1.5 rounded-lg">🔔</span>
+                                    遺漏提醒 & 備註檢查
+                                </h4>
+                                {aiResult.reminders.length > 0 ? (
+                                    <div className="bg-pink-50 border border-pink-100 rounded-lg p-4">
+                                        <ul className="space-y-2">
+                                            {aiResult.reminders.map((reminder, idx) => (
+                                                <li key={idx} className="flex items-start gap-2 text-pink-700 text-sm font-medium">
+                                                    <span>💡</span>
+                                                    <span>{reminder}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ) : (
+                                    <div className="text-gray-400 italic text-sm">備註中看起來沒有特別需要提醒的事項。</div>
+                                )}
+                            </div>
                          </div>
-                     </div>
-                 </div>
+                    </div>
+                 </>
              ) : (
                  <div className="text-center py-20 bg-white rounded-xl border border-gray-100 shadow-sm max-w-3xl mx-auto">
                      <div className="text-7xl mb-6 animate-bounce">🤖</div>
                      <h3 className="text-2xl font-bold text-gray-800 mb-3">尚未進行 AI 分析</h3>
-                     <p className="text-gray-500 mb-8 max-w-md mx-auto">讓 AI 幫你看看行程安排是否合理，獲得客製化的生存建議！</p>
+                     <p className="text-gray-500 mb-8 max-w-md mx-auto">讓 AI 幫你檢視行程壓力，並自動整理待辦事項與重要提醒！</p>
                      <button 
                         onClick={handleAIAnalysis}
                         className="bg-indigo-600 text-white px-8 py-3 rounded-xl hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-200 font-bold text-lg hover:-translate-y-1"
