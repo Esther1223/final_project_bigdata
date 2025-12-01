@@ -1,0 +1,5 @@
+{
+  "name": "UniStress Analyzer",
+  "description": "An AI-powered schedule analyzer for college students to track time, calculate stress levels, and get personalized advice.",
+  "requestFramePermissions": []
+}
