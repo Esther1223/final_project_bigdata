@@ -105,7 +105,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
@@ -117,7 +117,7 @@ export default function App() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 py-8">
+      <main className="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
         
         {showApiKeyError && (
              <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r shadow-sm">
@@ -274,6 +274,14 @@ export default function App() {
                     {/* Stress Analysis Card */}
                     <div className="bg-white rounded-2xl shadow-xl border border-indigo-100 overflow-hidden">
                         <div className="bg-gradient-to-r from-indigo-600 to-violet-600 p-8 md:p-10 text-white relative overflow-hidden">
+                             {/* AI Badge for Stress Card */}
+                            <div className="absolute top-6 right-6 z-20">
+                                <span className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md border border-white/30 text-white px-3 py-1.5 rounded-full text-xs font-bold tracking-wide shadow-sm">
+                                    <svg className="w-3 h-3 text-yellow-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path></svg>
+                                    AI 協作分析
+                                </span>
+                            </div>
+
                             <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                                 <div className="max-w-xl">
                                     <h2 className="text-3xl font-bold mb-3">AI 壓力檢測</h2>
@@ -326,7 +334,13 @@ export default function App() {
                     <div>
                          <div className="flex items-center gap-3 mb-6">
                             <span className="text-3xl">📅</span>
-                            <h2 className="text-2xl font-bold text-gray-800">智慧助理報告</h2>
+                            <div className="flex items-center gap-3">
+                                <h2 className="text-2xl font-bold text-gray-800">智慧助理報告</h2>
+                                {/* AI Badge for Assistant */}
+                                <span className="inline-flex items-center gap-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
+                                    ✨ AI Generated
+                                </span>
+                            </div>
                          </div>
                          
                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -420,6 +434,18 @@ export default function App() {
           </div>
         )}
       </main>
+
+      {/* Footer Disclaimer */}
+      <footer className="bg-white border-t border-gray-100 py-6 mt-8">
+          <div className="max-w-6xl mx-auto px-4 text-center">
+              <p className="text-gray-400 text-sm mb-2">
+                本專案使用 <a href="https://ai.google.dev/" target="_blank" rel="noreferrer" className="text-indigo-500 hover:text-indigo-600 underline">Google Gemini API</a> 進行 AI 協作分析。
+              </p>
+              <p className="text-xs text-gray-300">
+                AI 生成內容僅供參考，請依實際情況評估。 | Vibe Coding Project Demo
+              </p>
+          </div>
+      </footer>
     </div>
   );
 }
